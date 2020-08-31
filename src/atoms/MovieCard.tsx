@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { PlayerModule } from '../module/PlayerModule';
 
-export const MovieCard = (props: { movie: any }) => (
+export const MovieCard = (props: {
+  movie: any;
+  onPress: (movie: any) => void;
+}) => (
   <View
     style={{
       backgroundColor: '#111111',
@@ -21,7 +23,7 @@ export const MovieCard = (props: { movie: any }) => (
     }}
   >
     <TouchableOpacity
-      onPress={() => PlayerModule.playMovie(props.movie)}
+      onPress={props.onPress}
       disabled={!props.movie.available}
       style={{
         height: 140,
@@ -97,12 +99,20 @@ export const MovieCard = (props: { movie: any }) => (
               elevation: 3,
             }}
           >
-            <Icon name="play" size={18} color="#000000" style={{ paddingLeft: 4 }} />
+            <Icon
+              name="play"
+              size={18}
+              color="#000000"
+              style={{ paddingLeft: 4 }}
+            />
           </View>
         </View>
       ) : (
         <View
-          style={[StyleSheet.absoluteFill, { backgroundColor: '#000000', opacity: 0.7 }]}
+          style={[
+            StyleSheet.absoluteFill,
+            { backgroundColor: '#000000', opacity: 0.7 },
+          ]}
         ></View>
       )}
     </TouchableOpacity>

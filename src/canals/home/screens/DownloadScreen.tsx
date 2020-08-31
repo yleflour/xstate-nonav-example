@@ -54,7 +54,9 @@ export const DownloadScreen = observer(() => {
                   paddingBottom: 10,
                 }}
                 horizontal
-                renderItem={({ item }) => <MovieCard movie={item} />}
+                renderItem={({ item }) => (
+                  <MovieCard movie={item} onPress={PlayerModule.playMovie} />
+                )}
               />
             </>
           );

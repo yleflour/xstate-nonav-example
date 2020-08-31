@@ -1,35 +1,35 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   FlatList,
   Text,
   TouchableOpacity,
   SafeAreaView,
-} from "react-native";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
-import { observer } from "mobx-react";
-import { Header } from "../../../atoms/Header";
-import { MovieCard } from "../../../atoms/MovieCard";
-import { MoviesModule } from "../../../module/MoviesModule";
-import { HomeModule } from "../../../module/HomeModule";
-import { SearchModule } from "../../../module/SearchModule";
-import { PlayerModule } from "../../../module/PlayerModule";
+} from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { observer } from 'mobx-react';
+import { Header } from '../../../atoms/Header';
+import { MovieCard } from '../../../atoms/MovieCard';
+import { MoviesModule } from '../../../module/MoviesModule';
+import { HomeModule } from '../../../module/HomeModule';
+import { SearchModule } from '../../../module/SearchModule';
+import { PlayerModule } from '../../../module/PlayerModule';
 
 const data = [
   {
-    title: "Reprendre avec le profil de Thomas",
+    title: 'Reprendre avec le profil de Thomas',
     dataFilter: (movie: any) => movie.progress > 0,
   },
   {
-    title: "Ma Liste",
+    title: 'Ma Liste',
     dataFilter: (movie: any) => movie.myList,
   },
   {
-    title: "Téléchargements",
+    title: 'Téléchargements',
     dataFilter: (movie: any) => movie.downloaded,
   },
   {
-    title: "Découvrir",
+    title: 'Découvrir',
     dataFilter: (movie: any) => movie.progress === 0,
   },
 ];
@@ -43,18 +43,18 @@ export const HomeScreen = observer(() => {
       <FlatList
         contentContainerStyle={{ paddingBottom: 60 }}
         ListHeaderComponent={
-          <View style={{ position: "relative" }}>
+          <View style={{ position: 'relative' }}>
             <Header
               onPress={() => PlayerModule.playMovie(headerMovie)}
               title={headerMovie.title}
               subtitle="Nouveaux épisodes disponibles"
               imageUri={headerMovie.imageUri}
             />
-            <SafeAreaView style={{ position: "absolute", width: "100%" }}>
+            <SafeAreaView style={{ position: 'absolute', width: '100%' }}>
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   margin: 10,
                 }}
               >
@@ -77,8 +77,8 @@ export const HomeScreen = observer(() => {
               <Text
                 style={{
                   fontSize: 12,
-                  color: "#FFFFFF",
-                  fontWeight: "500",
+                  color: '#FFFFFF',
+                  fontWeight: '500',
                   marginLeft: 15,
                 }}
               >
@@ -93,7 +93,9 @@ export const HomeScreen = observer(() => {
                   paddingBottom: 10,
                 }}
                 horizontal
-                renderItem={({ item }) => <MovieCard movie={item} />}
+                renderItem={({ item }) => (
+                  <MovieCard movie={item} onPress={PlayerModule.playMovie} />
+                )}
               />
             </>
           );
