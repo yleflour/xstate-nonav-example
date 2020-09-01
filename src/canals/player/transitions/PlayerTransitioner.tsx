@@ -5,7 +5,6 @@ import Animated, { Easing } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 import { transition } from 'react-nonav';
-import { PlayerModule } from '../../../module/PlayerModule';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -133,7 +132,7 @@ export class PlayerTransitioner extends transition.TransitionComponent {
           ]}
         >
           <TouchableOpacity
-            onPress={PlayerModule.toggleIsPlayerMinimized}
+            onPress={() => {} /*send('PLAYER_TOGGLE_MINIMIZED')*/} // Todo
             style={{
               height: 60,
               justifyContent: 'center',

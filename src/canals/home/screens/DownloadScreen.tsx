@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import { Header } from '../../../atoms/Header';
 import { MovieCard } from '../../../atoms/MovieCard';
-import { MoviesModule } from '../../../module/MoviesModule';
-import { PlayerModule } from '../../../module/PlayerModule';
+import { RootMachineProvider } from '../../../module/root.machine';
 
 const data = [
   {
@@ -14,16 +13,17 @@ const data = [
 ];
 
 export const DownloadScreen = observer(() => {
-  const headerMovie = MoviesModule.movies.filter(
-    (movie) => movie.downloaded
-  )[0];
+  const [current, send] = useContext(RootMachineProvider);
+  const movies = current.context.movies;
+  const headerMovie = movies.find((movie) => movie.downloaded);
+
   return (
     <View>
       <FlatList
         contentContainerStyle={{ paddingBottom: 60 }}
         ListHeaderComponent={
           <Header
-            onPress={() => PlayerModule.playMovie(headerMovie)}
+            onPress={() => send('MOVIE_PLAY', { movie: headerMovie })}
             title={headerMovie.title}
             subtitle="10 épisodes téléchargés"
             imageUri={headerMovie.imageUri}
@@ -32,7 +32,7 @@ export const DownloadScreen = observer(() => {
         data={data}
         keyExtractor={(item) => item.title}
         renderItem={({ item }) => {
-          const sectionMovies = MoviesModule.movies.filter(item.dataFilter);
+          const sectionMovies = movies.filter(item.dataFilter);
           return (
             <>
               <Text
@@ -55,7 +55,10 @@ export const DownloadScreen = observer(() => {
                 }}
                 horizontal
                 renderItem={({ item }) => (
-                  <MovieCard movie={item} onPress={PlayerModule.playMovie} />
+                  <MovieCard
+                    movie={item}
+                    onPress={send('PLAY_MOVIE', { movie: item })}
+                  />
                 )}
               />
             </>

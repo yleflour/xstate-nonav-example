@@ -1,25 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Canal, Screen, transition } from 'react-nonav';
 import { RemoteControlScreen } from './screens/RemoteControlScreen';
 import { OnScreenPlayerScreen } from './screens/OnScreenPlayerScreen';
-import { PlayerModule } from '../../module/PlayerModule';
 import { ConnectivityModule } from '../../module/ConnectivityModule';
+import { RootMachineProvider } from '../../module/root.machine';
+import { debug } from 'react-native-reanimated';
 
 export const PlayerCanal = () => {
+  const [current, send] = useContext(RootMachineProvider);
+  const currentMovie = current.context.currentMovie;
+
   return (
     <Canal style={{ flex: 1 }}>
       <Screen
-        visible={PlayerModule.isMoviePlaying && !ConnectivityModule.isConnectedToChromeCast}
+        visible={
+          current.matches('player.playing') &&
+          !ConnectivityModule.isConnectedToChromeCast //TODO
+        }
         name="OnScreenPlayer"
         Component={OnScreenPlayerScreen}
-        props={{ movie: PlayerModule.movie }}
+        props={{ movie: currentMovie }}
         Transitioner={transition.Fade}
       />
       <Screen
-        visible={PlayerModule.isMoviePlaying && ConnectivityModule.isConnectedToChromeCast}
+        visible={
+          current.matches('player.playing') &&
+          ConnectivityModule.isConnectedToChromeCast //TODO
+        }
         name="RemoteControl"
         Component={RemoteControlScreen}
-        props={{ movie: PlayerModule.movie }}
+        props={{ movie: currentMovie }}
         Transitioner={transition.Fade}
       />
     </Canal>

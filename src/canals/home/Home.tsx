@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Canal, Screen, transition } from 'react-nonav';
 import { StyleSheet, View } from 'react-native';
 
@@ -6,57 +6,60 @@ import { TabBar } from '../../atoms/TabBar';
 
 import { HomeScreen } from './screens/HomeScreen';
 import { DownloadScreen } from './screens/DownloadScreen';
-import { SearchModule } from '../../module/SearchModule';
-import { HomeModule } from '../../module/HomeModule';
 import { observer } from 'mobx-react';
 import { BurgerMenuScreen } from './screens/BurgerMenuScreen';
+import { RootMachineProvider } from '../../module/root.machine';
 
-export const Home = observer(() => (
-  <View style={StyleSheet.absoluteFill}>
-    <Canal style={{ flex: 1 }}>
-      <Screen
-        name="Home"
-        Component={HomeScreen}
-        visible={!HomeModule.isFilteringDownloaded}
-        Transitioner={transition.Fade}
+export const Home = observer(() => {
+  const [current, send] = useContext(RootMachineProvider);
+  return (
+    <View style={StyleSheet.absoluteFill}>
+      <Canal style={{ flex: 1 }}>
+        <Screen
+          name="Home"
+          Component={HomeScreen}
+          visible={current.matches('explorer.main.home')}
+          Transitioner={transition.Fade}
+        />
+        <Screen
+          name="Downloads"
+          Component={DownloadScreen}
+          visible={current.matches('explorer.main.downloads')}
+          onBack={() => send('BACK_PRESS')}
+          Transitioner={transition.Fade}
+        />
+        <Screen
+          name="BurgerMenu"
+          key="BurgerMenu"
+          Component={BurgerMenuScreen}
+          visible={current.matches('explorer.burgerMenu.open')}
+          Transitioner={transition.BurgerMenuLeft}
+          onBack={() => send('BACK_PRESS')}
+          isFullScreen
+        />
+      </Canal>
+      <TabBar
+        items={[
+          {
+            iconName: 'home',
+            title: 'Accueil',
+            selected: current.matches('explorer.main.home'),
+            onPress: () => send('HOME_PRESS'),
+          },
+          {
+            iconName: 'magnifier',
+            title: 'Rechercher',
+            selected: false,
+            onPress: () => send('SEARCH_PRESS'),
+          },
+          {
+            iconName: 'arrow-down-circle',
+            title: 'Téléchargements',
+            selected: current.matches('explorer.main.downloads'),
+            onPress: () => send('DOWNLOADS_PRESS'),
+          },
+        ]}
       />
-      <Screen
-        name="Downloads"
-        Component={DownloadScreen}
-        visible={HomeModule.isFilteringDownloaded}
-        Transitioner={transition.Fade}
-      />
-      <Screen
-        name="BurgerMenu"
-        key="BurgerMenu"
-        Component={BurgerMenuScreen}
-        visible={HomeModule.isBurgerMenuOpen}
-        Transitioner={transition.BurgerMenuLeft}
-        isFullScreen
-        onBack={HomeModule.closeBurgerMenu}
-      />
-    </Canal>
-    <TabBar
-      items={[
-        {
-          iconName: 'home',
-          title: 'Accueil',
-          selected: !HomeModule.isFilteringDownloaded,
-          onPress: HomeModule.cancelFilter,
-        },
-        {
-          iconName: 'magnifier',
-          title: 'Rechercher',
-          selected: false,
-          onPress: SearchModule.search,
-        },
-        {
-          iconName: 'arrow-down-circle',
-          title: 'Téléchargements',
-          selected: HomeModule.isFilteringDownloaded,
-          onPress: HomeModule.filterDownloaded,
-        },
-      ]}
-    />
-  </View>
-));
+    </View>
+  );
+});

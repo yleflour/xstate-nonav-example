@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   FlatList,
@@ -10,10 +10,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { observer } from 'mobx-react';
 import { Header } from '../../../atoms/Header';
 import { MovieCard } from '../../../atoms/MovieCard';
-import { MoviesModule } from '../../../module/MoviesModule';
-import { HomeModule } from '../../../module/HomeModule';
-import { SearchModule } from '../../../module/SearchModule';
-import { PlayerModule } from '../../../module/PlayerModule';
+import { RootMachineProvider } from '../../../module/root.machine';
 
 const data = [
   {
@@ -35,9 +32,12 @@ const data = [
 ];
 
 export const HomeScreen = observer(() => {
-  const headerMovie = MoviesModule.movies.filter(
-    (movie) => movie.available && !movie.myList
-  )[0];
+  // @ts-ignore
+  const [current, send] = useContext(RootMachineProvider);
+  const movies = current.context.movies;
+
+  const headerMovie = movies.find((movie: any) => !movie.myList);
+
   return (
     <View>
       <FlatList
@@ -45,9 +45,9 @@ export const HomeScreen = observer(() => {
         ListHeaderComponent={
           <View style={{ position: 'relative' }}>
             <Header
-              onPress={() => PlayerModule.playMovie(headerMovie)}
+              onPress={() => send('MOVIE_PLAY', { movie: headerMovie })}
               title={headerMovie.title}
-              subtitle="Nouveaux épisodes disponibles"
+              subtitle="New episodes available"
               imageUri={headerMovie.imageUri}
             />
             <SafeAreaView style={{ position: 'absolute', width: '100%' }}>
@@ -58,10 +58,10 @@ export const HomeScreen = observer(() => {
                   margin: 10,
                 }}
               >
-                <TouchableOpacity onPress={HomeModule.openBurgerMenu}>
+                <TouchableOpacity onPress={() => send('MENU_PRESS')}>
                   <Icon name="menu" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={SearchModule.search}>
+                <TouchableOpacity onPress={() => send('SEARCH_PRESS')}>
                   <Icon name="magnifier" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
               </View>
@@ -71,7 +71,7 @@ export const HomeScreen = observer(() => {
         data={data}
         keyExtractor={(item) => item.title}
         renderItem={({ item }) => {
-          const sectionMovies = MoviesModule.movies.filter(item.dataFilter);
+          const sectionMovies = movies.filter(item.dataFilter);
           return (
             <>
               <Text
@@ -94,7 +94,10 @@ export const HomeScreen = observer(() => {
                 }}
                 horizontal
                 renderItem={({ item }) => (
-                  <MovieCard movie={item} onPress={PlayerModule.playMovie} />
+                  <MovieCard
+                    movie={item}
+                    onPress={() => send('MOVIE_PLAY', { movie: item })}
+                  />
                 )}
               />
             </>
