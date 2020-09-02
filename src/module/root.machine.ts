@@ -1,6 +1,7 @@
 import React from 'react';
 import { Machine, MachineConfig, assign } from 'xstate';
 import { defaultMovies } from './movies.const';
+import { connectivityService } from './connectivity.service';
 
 const burgerMenuMachine: MachineConfig<any, any, any> = {
   initial: 'closed',
@@ -26,8 +27,14 @@ const searchMachine: MachineConfig<any, any, any> = {
 
 const explorerMainMachine: MachineConfig<any, any, any> = {
   initial: 'home',
+  invoke: {
+    id: 'explorer-connectivity',
+    src: connectivityService,
+  },
   states: {
-    home: { on: { DOWNLOADS_PRESS: 'downloads' } },
+    home: {
+      on: { DOWNLOADS_PRESS: 'downloads', NETWORK_DISCONNECT: 'downloads' },
+    },
     downloads: { on: { HOME_PRESS: 'home' } },
   },
 };
@@ -43,11 +50,15 @@ const explorerMachine: MachineConfig<any, any, any> = {
 
 const playerMachine: MachineConfig<any, any, any> = {
   initial: 'stopped',
+  invoke: {
+    id: 'player_connectivity',
+    src: connectivityService,
+  },
   states: {
     stopped: {
       onEntry: [
         assign({
-          currentMovieId: null,
+          currentMovie: null,
         }),
       ],
       on: {
@@ -67,6 +78,13 @@ const playerMachine: MachineConfig<any, any, any> = {
       },
       on: {
         MOVIE_STOP: 'stopped',
+        NETWORK_DISCONNECT: [
+          {
+            cond: (ctx, e) => !ctx.currentMovie.downloaded,
+            target: 'stopped',
+            actions: [() => alert("You've been disconnected")],
+          },
+        ],
       },
     },
   },

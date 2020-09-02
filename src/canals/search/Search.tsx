@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Canal, Screen, transition } from 'react-nonav';
-import { observer } from 'mobx-react';
 import { SearchScreen } from './screens/SearchScreen';
 import { RootMachineProvider } from '../../module/root.machine';
 
-export const Search = observer(() => {
+export const Search = () => {
+  // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
 
   return (
@@ -20,4 +20,4 @@ export const Search = observer(() => {
       />
     </Canal>
   );
-});
+};

@@ -7,7 +7,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { observer } from 'mobx-react';
 import { Header } from '../../../atoms/Header';
 import { MovieCard } from '../../../atoms/MovieCard';
 import { RootMachineProvider } from '../../../module/root.machine';
@@ -31,7 +30,7 @@ const data = [
   },
 ];
 
-export const HomeScreen = observer(() => {
+export const HomeScreen = () => {
   // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
   const movies = current.context.movies;
@@ -106,4 +105,4 @@ export const HomeScreen = observer(() => {
       />
     </View>
   );
-});
+};

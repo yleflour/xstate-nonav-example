@@ -3,10 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export const MovieCard = (props: {
+interface Props {
   movie: any;
   onPress: (movie: any) => void;
-}) => (
+}
+
+export const MovieCard = (props: Props) => (
   <View
     style={{
       backgroundColor: '#111111',
@@ -24,7 +26,6 @@ export const MovieCard = (props: {
   >
     <TouchableOpacity
       onPress={props.onPress}
-      disabled={!props.movie.available}
       style={{
         height: 140,
         width: 100,
@@ -71,50 +72,41 @@ export const MovieCard = (props: {
           </View>
         </LinearGradient>
       </View>
-      {props.movie.available ? (
+      <View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        ]}
+      >
         <View
-          style={[
-            StyleSheet.absoluteFill,
-            {
-              justifyContent: 'center',
-              alignItems: 'center',
+          style={{
+            width: 50,
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#FFFFFF',
+            borderRadius: 25,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 1,
             },
-          ]}
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+            elevation: 3,
+          }}
         >
-          <View
-            style={{
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#FFFFFF',
-              borderRadius: 25,
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 1,
-              },
-              shadowOpacity: 0.22,
-              shadowRadius: 2.22,
-              elevation: 3,
-            }}
-          >
-            <Icon
-              name="play"
-              size={18}
-              color="#000000"
-              style={{ paddingLeft: 4 }}
-            />
-          </View>
+          <Icon
+            name="play"
+            size={18}
+            color="#000000"
+            style={{ paddingLeft: 4 }}
+          />
         </View>
-      ) : (
-        <View
-          style={[
-            StyleSheet.absoluteFill,
-            { backgroundColor: '#000000', opacity: 0.7 },
-          ]}
-        ></View>
-      )}
+      </View>
     </TouchableOpacity>
   </View>
 );

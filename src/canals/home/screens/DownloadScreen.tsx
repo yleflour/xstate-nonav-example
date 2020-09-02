@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { View, FlatList, Text } from 'react-native';
-import { observer } from 'mobx-react';
 import { Header } from '../../../atoms/Header';
 import { MovieCard } from '../../../atoms/MovieCard';
 import { RootMachineProvider } from '../../../module/root.machine';
@@ -12,10 +11,11 @@ const data = [
   },
 ];
 
-export const DownloadScreen = observer(() => {
+export const DownloadScreen = () => {
+  // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
   const movies = current.context.movies;
-  const headerMovie = movies.find((movie) => movie.downloaded);
+  const headerMovie = movies.find((movie: any) => movie.downloaded);
 
   return (
     <View>
@@ -57,7 +57,7 @@ export const DownloadScreen = observer(() => {
                 renderItem={({ item }) => (
                   <MovieCard
                     movie={item}
-                    onPress={send('PLAY_MOVIE', { movie: item })}
+                    onPress={() => send('PLAY_MOVIE', { movie: item })}
                   />
                 )}
               />
@@ -67,4 +67,4 @@ export const DownloadScreen = observer(() => {
       />
     </View>
   );
-});
+};

@@ -4,6 +4,7 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import { RootMachineProvider } from '../../../module/root.machine';
 
 export const OnScreenPlayerScreen = (props: { movie: any }) => {
+  // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
   return (
     <View

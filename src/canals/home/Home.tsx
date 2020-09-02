@@ -6,11 +6,11 @@ import { TabBar } from '../../atoms/TabBar';
 
 import { HomeScreen } from './screens/HomeScreen';
 import { DownloadScreen } from './screens/DownloadScreen';
-import { observer } from 'mobx-react';
 import { BurgerMenuScreen } from './screens/BurgerMenuScreen';
 import { RootMachineProvider } from '../../module/root.machine';
 
-export const Home = observer(() => {
+export const Home = () => {
+  // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
   return (
     <View style={StyleSheet.absoluteFill}>
@@ -62,4 +62,4 @@ export const Home = observer(() => {
       />
     </View>
   );
-});
+};
