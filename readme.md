@@ -17,6 +17,13 @@ yarn
 yarn start
 ```
 
+## What you can do
+
+- Basic navigation
+- Disconnecting from the internet
+  - If playing a video that's not in downloads, the player will close
+  - If you are in the "Home" tab, it will redirect to the "Downloads" tab
+
 ## Notes
 
 - This example is based on the [react-nonav example](https://github.com/tpucci/react-nonav/tree/master/example), transformed to run with xstate instead of mobx

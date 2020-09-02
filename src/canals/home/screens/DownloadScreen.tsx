@@ -6,7 +6,7 @@ import { RootMachineProvider } from '../../../module/root.machine';
 
 const data = [
   {
-    title: 'Séries téléchargées',
+    title: 'Downloaded Series',
     dataFilter: (movie: any) => movie.downloaded,
   },
 ];
@@ -25,7 +25,7 @@ export const DownloadScreen = () => {
           <Header
             onPress={() => send('MOVIE_PLAY', { movie: headerMovie })}
             title={headerMovie.title}
-            subtitle="10 épisodes téléchargés"
+            subtitle="10 downloaded episodes"
             imageUri={headerMovie.imageUri}
           />
         }
@@ -57,7 +57,7 @@ export const DownloadScreen = () => {
                 renderItem={({ item }) => (
                   <MovieCard
                     movie={item}
-                    onPress={() => send('PLAY_MOVIE', { movie: item })}
+                    onPress={() => send('MOVIE_PLAY', { movie: item })}
                   />
                 )}
               />

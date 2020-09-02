@@ -6,7 +6,6 @@ import { TabBar } from '../../atoms/TabBar';
 
 import { HomeScreen } from './screens/HomeScreen';
 import { DownloadScreen } from './screens/DownloadScreen';
-import { BurgerMenuScreen } from './screens/BurgerMenuScreen';
 import { RootMachineProvider } from '../../module/root.machine';
 
 export const Home = () => {
@@ -28,33 +27,24 @@ export const Home = () => {
           onBack={() => send('BACK_PRESS')}
           Transitioner={transition.Fade}
         />
-        <Screen
-          name="BurgerMenu"
-          key="BurgerMenu"
-          Component={BurgerMenuScreen}
-          visible={current.matches('explorer.burgerMenu.open')}
-          Transitioner={transition.BurgerMenuLeft}
-          onBack={() => send('BACK_PRESS')}
-          isFullScreen
-        />
       </Canal>
       <TabBar
         items={[
           {
             iconName: 'home',
-            title: 'Accueil',
+            title: 'Home',
             selected: current.matches('explorer.main.home'),
             onPress: () => send('HOME_PRESS'),
           },
           {
             iconName: 'magnifier',
-            title: 'Rechercher',
+            title: 'Search',
             selected: false,
             onPress: () => send('SEARCH_PRESS'),
           },
           {
             iconName: 'arrow-down-circle',
-            title: 'Téléchargements',
+            title: 'Downloads',
             selected: current.matches('explorer.main.downloads'),
             onPress: () => send('DOWNLOADS_PRESS'),
           },

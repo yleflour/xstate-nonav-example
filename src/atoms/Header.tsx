@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableHighlight, Image } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  Image,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const Header = (props: {
@@ -75,7 +81,7 @@ export const Header = (props: {
             color: '#000000',
           }}
         >
-          Regarder
+          Watch
         </Text>
       </TouchableHighlight>
     </LinearGradient>

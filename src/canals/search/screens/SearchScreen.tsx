@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { RootMachineProvider } from '../../../module/root.machine';
 
 export const SearchScreen = () => {
+  // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
 
   return (
@@ -32,7 +33,7 @@ export const SearchScreen = () => {
               borderRadius: 15,
               color: '#FFFFFF',
             }}
-            placeholder="Rechercher"
+            placeholder="Search"
             placeholderTextColor="#CCCCCC"
             autoFocus
           />

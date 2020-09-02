@@ -3,20 +3,6 @@ import { Machine, MachineConfig, assign } from 'xstate';
 import { defaultMovies } from './movies.const';
 import { connectivityService } from './connectivity.service';
 
-const burgerMenuMachine: MachineConfig<any, any, any> = {
-  initial: 'closed',
-  states: {
-    open: {
-      on: {
-        MENU_PRESS: 'closed',
-        BACK_PRESS: 'closed',
-        DOWNLOADS_PRESS: 'closed',
-      },
-    },
-    closed: { on: { MENU_PRESS: 'open' } },
-  },
-};
-
 const searchMachine: MachineConfig<any, any, any> = {
   initial: 'closed',
   states: {
@@ -42,7 +28,6 @@ const explorerMainMachine: MachineConfig<any, any, any> = {
 const explorerMachine: MachineConfig<any, any, any> = {
   type: 'parallel',
   states: {
-    burgerMenu: burgerMenuMachine,
     search: searchMachine,
     main: explorerMainMachine,
   },

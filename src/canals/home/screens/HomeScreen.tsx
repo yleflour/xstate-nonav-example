@@ -13,19 +13,19 @@ import { RootMachineProvider } from '../../../module/root.machine';
 
 const data = [
   {
-    title: 'Reprendre avec le profil de Thomas',
+    title: 'Continue watching for Thomas',
     dataFilter: (movie: any) => movie.progress > 0,
   },
   {
-    title: 'Ma Liste',
+    title: 'My List',
     dataFilter: (movie: any) => movie.myList,
   },
   {
-    title: 'Téléchargements',
+    title: 'Downloaded',
     dataFilter: (movie: any) => movie.downloaded,
   },
   {
-    title: 'Découvrir',
+    title: 'Discover',
     dataFilter: (movie: any) => movie.progress === 0,
   },
 ];
@@ -49,22 +49,6 @@ export const HomeScreen = () => {
               subtitle="New episodes available"
               imageUri={headerMovie.imageUri}
             />
-            <SafeAreaView style={{ position: 'absolute', width: '100%' }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  margin: 10,
-                }}
-              >
-                <TouchableOpacity onPress={() => send('MENU_PRESS')}>
-                  <Icon name="menu" size={24} color="#FFFFFF" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => send('SEARCH_PRESS')}>
-                  <Icon name="magnifier" size={24} color="#FFFFFF" />
-                </TouchableOpacity>
-              </View>
-            </SafeAreaView>
           </View>
         }
         data={data}

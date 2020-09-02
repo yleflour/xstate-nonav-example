@@ -6,6 +6,7 @@ import { PlayerTransitioner } from './transitions/PlayerTransitioner';
 import { RootMachineProvider } from '../../module/root.machine';
 
 export const Player = () => {
+  // @ts-ignore
   const [current, send] = useContext(RootMachineProvider);
   return (
     <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
