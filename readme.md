@@ -8,7 +8,7 @@ You can find out more on [https://joyto.dev/xstate-nonav/](https://joyto.dev/xst
 
 ## Try it
 
-Download the app with Expo onn your phone [https://expo.io/@yleflour/projects/xstate-nonav-example](https://expo.io/@yleflour/projects/xstate-nonav-example)
+Download the app with Expo on your phone [https://expo.io/@yleflour/projects/xstate-nonav-example](https://expo.io/@yleflour/projects/xstate-nonav-example)
 
 ## Setup
 
