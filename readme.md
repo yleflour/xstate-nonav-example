@@ -6,6 +6,10 @@ This is a sample app demonstrating a way of orchestrating the xstate Library wit
 
 You can find out more on [https://joyto.dev/xstate-nonav/](https://joyto.dev/xstate-nonav/)
 
+## Try it
+
+Download the app with Expo onn your phone [https://expo.io/@yleflour/projects/xstate-nonav-example](https://expo.io/@yleflour/projects/xstate-nonav-example)
+
 ## Setup
 
 **Prerequisites:** Have [expo](https://expo.io/learn) installed
